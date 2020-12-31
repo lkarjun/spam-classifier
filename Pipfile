@@ -9,6 +9,9 @@ verify_ssl = true
 jupyter = "*"
 lab = "*"
 nltk = "*"
+sklearn = "*"
+pandas = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8"
