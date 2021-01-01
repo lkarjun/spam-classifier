@@ -27,3 +27,25 @@ def input_process(message: str) -> str:
     finalized_word = ' '.join(rm_unwanted_words)
 
     return finalized_word
+
+  
+def proceess_message(message: str) -> str:
+    
+    message = input_process(message)
+    dummy_list = [0 for _ in range(3000)]
+    for i in message.split():
+      if i in columns_names:
+        temp = columns_names.index(i)
+        if dummy_list[temp] >= 1:
+          dummy_list[temp] += 1
+        else:
+          dummy_list[temp] = 1
+          
+    return dummy_list
+    
+    
+    
+    
+    
+    
+    
