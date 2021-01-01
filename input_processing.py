@@ -1,6 +1,10 @@
 import re
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
+import pickle
+import warnings
+warnings.filterwarnings("ignore")
+
 
 columns_names = ['aah', 'aathi', 'abi', 'abiola', 'able', 'abt', 'abta', 'ac', 'acc', 'accept', 'access', 'accident', 'accidentally', 'accordingly', 'account', 'ache', 'across', 'action', 'activate', 'activity', 'actually', 'ad', 'add', 'added', 'addicted', 'addie', 'address', 'admirer', 'adore', 'adult', 'advance', 'advice', 'advise', 'ae', 'affair', 'affection', 'afraid', 'aft', 'afternoon', 'aftr', 'age', 'ago', 'ah', 'aha', 'ahead', 'ahmad', 'aight', 'aint', 'air', 'airport', 'aiya', 'aiyah', 'aiyar', 'aiyo', 'al', 'album', 'alcohol', 'alert', 'alex', 'alfie', 'alive', 'allah', 'almost', 'alone', 'along', 'already', 'alright', 'alrite', 'also', 'always', 'alwys', 'amazing', 'american', 'among', 'amount', 'amp', 'amt', 'an', 'angry', 'announcement', 'another', 'ansr', 'answer', 'answering', 'anti', 'anybody', 'anymore', 'anyone', 'anythin', 'anything', 'anytime', 'anyway', 'anyways', 'anywhere', 'apartment', 'apologise', 'app', 'apparently', 'apply', 'appointment', 'appreciate', 'apps', 'appt', 'april', 'ar', 'arcade', 'ard', 'area', 'argh', 'argue', 'argument', 'arm', 'armand', 'arng', 'around', 'arrange', 'arrested', 'arrive', 'arsenal', 'art', 'arun', 'as', 'asap', 'ask', 'askd', 'asked', 'askin', 'asking', 'asks', 'asleep', 'assume', 'ate', 'atlanta', 'atm', 'attempt', 'attend', 'auction', 'audition', 'august', 'aunt', 'aunty', 'auto', 'available', 'avatar', 'ave', 'avent', 'await', 'awaiting', 'awake', 'award', 'awarded', 'away', 'awesome', 'ba', 'babe', 'baby', 'back', 'bad', 'bag', 'bahamas', 'bak', 'balance', 'ball', 'bank', 'bar', 'barely', 'basic', 'basically', 'bat', 'bath', 'bathe', 'bathing', 'battery', 'bay', 'bb', 'bcm', 'bcoz', 'bcums', 'bday', 'bear', 'beautiful', 'beauty', 'become', 'becoz', 'bed', 'bedroom', 'beer', 'befor', 'begin', 'behave', 'behind', 'bein', 'believe', 'belive', 'bell', 'belly', 'belovd', 'ben', 'best', 'bet', 'better', 'beware', 'beyond', 'bf', 'bid', 'big', 'bigger', 'biggest', 'bill', 'billed', 'bin', 'bird', 'birla', 'birth', 'birthdate', 'birthday', 'bishan', 'bit', 'bitch', 'bite', 'biz', 'bk', 'black', 'blackberry', 'blah', 'blake', 'blame', 'blank', 'blanket', 'bleh', 'bless', 'blessed', 'blessing', 'blind', 'block', 'bloke', 'blonde', 'bloo', 'blood', 'bloody', 'bloomberg', 'blow', 'blu', 'blue', 'bluetooth', 'bluff', 'blur', 'bmw', 'boat', 'body', 'bold', 'bone', 'bonus', 'boo', 'book', 'booked', 'booking', 'boost', 'booty', 'bootydelious', 'bored', 'borin', 'boring', 'born', 'borrow', 'bos', 'boston', 'bother', 'bottle', 'bottom', 'bought', 'bout', 
                   'bowl', 'box', 'boy', 'boye', 'boyfriend', 'boytoy', 'bp', 'brah', 'brain', 'brand', 'brandy', 'bray', 'bread', 'break', 'breath', 'breathe', 'brief', 'bright', 'brilliant', 'bring', 'bringing', 'brings', 'bristol', 'british', 'britney', 'bro', 'broad', 'broke', 'bros', 'brothas', 'brother', 'brought', 'bslvyl', 'bstfrnd', 'bt', 'btw', 'buck', 'bud', 'budget', 'buff', 'bugis', 'building', 'bun', 'burger', 'burn', 'bus', 'business', 'busy', 'butt', 'buy', 'buying', 'buzy', 'buzz', 'bx', 'bye', 'cabin', 'cafe', 'cake', 'cal', 'calicut', 'california', 'call', 'callback', 'callcost', 'called', 'caller', 'callertune', 'callin', 'calling', 'cam', 'camcorder', 'came', 'camera', 'campus', 'cancel', 'cancer', 'cann', 'cannot', 'cant', 'captain', 'car', 'card', 'cardiff', 'care', 'career', 'careful', 'carefully', 'caring', 'carlos', 'carry', 'cartoon', 'case', 'cash', 'cat', 'catch', 'catching', 'caught', 'cause', 'cbe', 'cc', 'cd', 'celeb', 'celebrate', 'celebration', 'cell', 'center', 'centre', 'certainly', 'cha', 'chain', 'challenge', 'chance', 'change', 'changed', 'channel', 'character', 'charge', 'charged', 'charity', 'chart', 'chasing', 'chat', 'chatting', 'cheap', 'cheaper', 'chechi', 'check', 'checked', 'checking', 'cheer', 'chennai', 'chicken', 'chikku', 'child', 'childish', 'chill', 'chillin', 'china', 'chinese', 'choice', 'choose', 'chosen', 'christmas', 'church', 'cine', 'cinema', 'citizen', 'city', 'claim', 'claire', 'class', 'clean', 'cleaning', 'clear', 'cleared', 'click', 'clock', 'clos', 'close', 'closed', 'closer', 'club', 'cm', 'cn', 'co', 'cock', 'code', 'coffee', 'coin', 'cold', 'colleague', 'collect', 'collected', 'collecting', 'collection', 'college', 'colour', 'com', 'come', 'comedy', 'comin', 'coming', 'common', 'community', 'comp', 'company', 'competition', 'complete', 'completely', 'complimentary', 'computer', 'comuk', 'concentrate', 'concert', 'condition', 'confidence', 'confirm', 'confirmed', 'congrats', 'congratulation', 'connect', 'connection', 'considering', 'constantly', 'contact', 'contacted', 'content', 'contract', 'convey', 'cook', 'cooking', 'cool', 'copy', 'cornwall', 'correct', 'cost', 'costa', 'could', 'count', 'country', 'couple', 'course', 'cover', 'coz', 'cr', 'crab', 'crack', 'cramp', 'crave', 'crazy', 'cream', 'created', 'credit', 'credited', 'cross', 'croydon', 'cruise', 'cry', 'csbcm', 'cud', 'cuddle', 'cum', 'cup', 'current', 'currently', 'cust', 'custcare', 'customer', 'cut', 'cute', 'cutefrnd', 'cuz', 'cw', 'da', 'dad', 'daddy', 'dai', 'daily', 
@@ -29,7 +33,7 @@ def input_process(message: str) -> str:
     return finalized_word
 
   
-def proceess_message(message: str) -> str:
+def process_message(message: str) -> str:
     
     message = input_process(message)
     dummy_list = [0 for _ in range(3000)]
@@ -43,9 +47,12 @@ def proceess_message(message: str) -> str:
           
     return dummy_list
     
-    
-    
-    
-    
-    
-    
+
+def model_answer_please(message: str) -> str:
+  model = pickle.load(open("spamModel_1.model", "rb"))
+  message = process_message(message)
+  return model.predict([message])[0]
+
+
+if __name__ == "__main__":
+  print(model_answer_please("this is free for all users"))
