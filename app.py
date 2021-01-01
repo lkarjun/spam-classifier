@@ -9,6 +9,3 @@ app = FastAPI()
 @app.get('/')
 async def serve_home(request: Request):
     return templates.TemplateResponse('index.html', {'request': request})
-
-if __name__ == '__main__':
-    uvicorn.run(app)
