@@ -6,13 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-jupyter = "*"
-lab = "*"
+fastapi = "*"
+uvicorn = "*"
+numpy = "*"
+pandas = "*"
 nltk = "*"
 sklearn = "*"
-pandas = "*"
-numpy = "*"
-requests = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.8"
