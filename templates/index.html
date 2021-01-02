@@ -13,11 +13,11 @@
 
     <h1 style="padding: 25px; font-variant: small-caps" class="text-danger">Welcome to Spam Classifier</h1>
 
-    <form style="padding-left: 5px; padding-right: 5px; padding-top: 10px">
+    <form style="padding-left: 5px; padding-right: 5px; padding-top: 10px" method="POST">
         <!-- Message input -->
         <div class="form-outline mb-4 img-fluid hover-shadow" style="padding-top: 25px;">
 
-          <textarea class="form-control" id="form4Example3" rows="4"></textarea>
+          <textarea class="form-control" id="form4Example3" rows="4" name="message">{{msg}}</textarea>
 
           <label class="form-label" for="form4Example3">Message</label>
 
@@ -31,7 +31,7 @@
     </form>
 
     <p class="note note-danger">
-        <strong>Lk : </strong> Saying, It's Spam.
+        <strong>Lk : </strong> Saying, {{ Spam }}..
     </p>
        
     <div style="padding-top: 35px;"></div>
