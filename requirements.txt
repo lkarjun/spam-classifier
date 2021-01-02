@@ -5,3 +5,4 @@ pandas
 nltk
 sklearn
 Jinja2
+python-multipart
