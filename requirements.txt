@@ -6,4 +6,4 @@ pandas
 nltk
 sklearn
 Jinja2==2.11.2
-python-multipart==20.0.4
+python-multipart
