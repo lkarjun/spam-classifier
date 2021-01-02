@@ -6,17 +6,17 @@ from input_processing import model_answer_please
 
 templates = Jinja2Templates(directory='templates')
 
-app = FastAPI()
+main = FastAPI()
 
-@app.get('/')
+@main.get('/')
 async def detect_me(request: Request):
     spam = "Please Enter message"
     return templates.TemplateResponse('index.html', context={'request': request, 'Spam': spam})
 
-@app.post('/')
+@main.post('/')
 async def detect_me(request: Request, message: str = Form(...)):
     spam = f"It's {model_answer_please(message)}."
     return templates.TemplateResponse('index.html', context={'request': request, 'Spam': spam, 'msg': message})
 
-if __name__ == "__main__":
-    uvicorn.run(app)
+# if __name__ == "__main__":
+#     uvicorn.run(app)
