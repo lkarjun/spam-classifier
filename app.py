@@ -18,5 +18,5 @@ async def detect_me(request: Request, message: str = Form(...)):
     spam = f"It's {model_answer_please(message)}."
     return templates.TemplateResponse('index.html', context={'request': request, 'Spam': spam, 'msg': message})
 
-# if __name__ == "__main__":
-#     uvicorn.run(main, host='127.0.0:1', port=8000)
+if __name__ == "__main__":
+    uvicorn.run(main)
