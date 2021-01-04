@@ -55,13 +55,13 @@ async def detect_me(request: Request):
 
 @main.post('/')
 async def detect_me(request: Request, message: str = Form(...)):
-    spam = f"It's {model_answer_please(message)}"
+    spam = f"Message is {model_answer_please(message)}"
     if "spam" in spam:
       return templates.TemplateResponse('index.html', context={'request': request, 
-                       'Spam': "It's" + spam, 'msg': message, 'color': 'note-danger'})
+                       'Spam': spam, 'msg': message, 'color': 'note-danger'})
     
     return templates.TemplateResponse('index.html', context={'request': request,
-                       'Spam': "It's" + spam, 'msg': message, 'color': 'note-success'})
+                       'Spam': spam, 'msg': message, 'color': 'note-success'})
 
 if __name__ == "__main__":
     uvicorn.run(main)
