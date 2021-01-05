@@ -51,7 +51,7 @@ def model_answer_please(message: str) -> str:
 @main.get('/')
 async def detect_me(request: Request):
     spam = "Please Enter message"
-    return templates.TemplateResponse('index.html', context={'request': request, 'Spam': spam, 'color': 'note-danger'})
+    return templates.TemplateResponse('index.html', context={'request': request, 'Spam': spam, 'color': 'note-primary'})
 
 @main.post('/')
 async def detect_me(request: Request, message: str = Form(...)):
